@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: { default: 'Caramel', template: '%s — Caramel' },
   description: 'Caramel es un bot de Discord todo en uno con moderación, música, economía, niveles y mucho más.',
   icons: { icon: '/images/CaramelIcon.svg' },
+  openGraph: {
+    title: 'Caramel',
+    description: 'Caramel es un bot de Discord todo en uno con moderación, música, economía, niveles y mucho más.',
+    url: 'https://caramel.gg',
+    siteName: 'Caramel',
+    images: [{ url: 'https://caramel.gg/images/og.png', width: 1986, height: 792 }],
+  },
 };
 
 const ANTI_FLASH = `(function(){var t=localStorage.getItem('caramel-theme')||'dark';var l=localStorage.getItem('caramel-lang')||'es';document.documentElement.dataset.theme=t;document.documentElement.dataset.lang=l;if(sessionStorage.getItem('ns:'+location.pathname)==='1')document.documentElement.dataset.navScrolled='1';window.addEventListener('pageshow',function(e){if(e.persisted)window.location.reload();});})();`;
