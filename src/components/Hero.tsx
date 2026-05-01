@@ -57,7 +57,7 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
 
             {/* Tagline */}
             <p data-i18n="hero.desc" className="text-muted text-lg md:text-xl font-body font-300 leading-relaxed max-w-md mb-10 animate-fade-up opacity-0 delay-2">
-              El bot de Discord que se adapta a tu servidor — no al revés.
+              El bot de Discord que se adapta a tu servidor, no al revés.
             </p>
 
             {/* CTAs */}
