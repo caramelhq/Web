@@ -51,8 +51,8 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
 
             {/* Heading */}
             <h1 className="font-display font-800 leading-[0.95] tracking-tight mb-6 animate-fade-up opacity-0 delay-1">
-              <span data-i18n="hero.line1" className="block text-7xl md:text-8xl lg:text-[6.5rem] text-text">Make it simple.</span>
-              <span data-i18n="hero.line2" className="block text-7xl md:text-8xl lg:text-[6.5rem] text-gradient">Make it perfect.</span>
+              <span data-i18n="hero.line1" className="block text-5xl md:text-6xl lg:text-7xl text-text">Make it simple.</span>
+              <span data-i18n="hero.line2" className="block text-5xl md:text-6xl lg:text-7xl text-gradient">Make it perfect.</span>
             </h1>
 
             {/* Tagline */}
