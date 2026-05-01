@@ -1,0 +1,243 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand */
+  --color-brand: #d77655;
+  --color-brand-light: #e8936f;
+  --color-brand-dim: rgba(215, 118, 85, 0.15);
+
+  /* Backgrounds */
+  --color-bg: #0c0a09;
+  --color-surface: #141110;
+  --color-surface-2: #1e1814;
+  --color-border: #2e2219;
+
+  /* Text */
+  --color-text: #f0ebe5;
+  --color-muted: #7a6a60;
+  --color-subtle: #3d302a;
+
+  /* Typography */
+  --font-display: "Syne", sans-serif;
+  --font-body: "Outfit", sans-serif;
+  --font-logo: "Lexend Deca", sans-serif;
+
+  /* Spacing extras */
+  --spacing-section: 7rem;
+}
+
+/* ── Light theme overrides ─────────────────────────────────── */
+[data-theme="light"] {
+  --color-bg:        #fdf8f4;
+  --color-surface:   #f4ede7;
+  --color-surface-2: #ece2da;
+  --color-border:    #ddd0c6;
+  --color-text:      #1c1410;
+  --color-muted:     #8a7060;
+  --color-subtle:    #c8bab2;
+}
+
+[data-theme="light"] .noise::after { opacity: 0.015; }
+
+/* ── Smooth theme transitions ─────────────────────────────── */
+.theme-transitioning,
+.theme-transitioning * {
+  transition:
+    background-color 0.22s ease,
+    border-color     0.22s ease,
+    color            0.22s ease,
+    box-shadow       0.22s ease !important;
+}
+
+/* Navbar bg vars (used by scrolled state) */
+:root                { --navbar-scrolled-bg: rgba(12,  10,  9,  0.88); }
+[data-theme="light"] { --navbar-scrolled-bg: rgba(253, 248, 244, 0.92); }
+
+/* ── Base reset ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-brand); }
+
+/* Selection */
+::selection {
+  background: rgba(215, 118, 85, 0.3);
+  color: var(--color-text);
+}
+
+/* Utility: brand gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #d77655 0%, #e8a882 50%, #c45e3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow utilities */
+.glow-brand {
+  box-shadow: 0 0 40px rgba(215, 118, 85, 0.25), 0 0 80px rgba(215, 118, 85, 0.1);
+}
+
+/* Fade-in animation */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease forwards;
+}
+
+/* Stagger delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.35s; }
+.delay-4 { animation-delay: 0.5s; }
+.delay-5 { animation-delay: 0.65s; }
+.delay-6 { animation-delay: 0.8s; }
+
+/* Flag visibility per language */
+[data-lang="es"] .flag-mx { display: inline-block; }
+[data-lang="es"] .flag-us { display: none; }
+[data-lang="en"] .flag-mx { display: none; }
+[data-lang="en"] .flag-us { display: inline-block; }
+
+/* Noise texture overlay */
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.navbar-inner {
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+  border-bottom: 1px solid var(--color-border);
+}
+
+#navbar.scrolled .navbar-inner,
+:root[data-nav-scrolled="1"] .navbar-inner {
+  background: var(--navbar-scrolled-bg);
+  backdrop-filter: blur(16px);
+  border-bottom-color: rgba(46, 34, 25, 0.6);
+}
+
+[data-theme="light"] #navbar.scrolled .navbar-inner,
+[data-theme="light"] :root[data-nav-scrolled="1"] .navbar-inner {
+  border-bottom-color: rgba(221, 208, 198, 0.8);
+}
+
+.shiny-premium {
+  background: linear-gradient(
+    120deg,
+    #b8832a 0%,
+    #f0c060 30%,
+    #fef3c0 50%,
+    #f0c060 70%,
+    #b8832a 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.crown-icon { color: #e8a820; }
+
+@keyframes bounce-pillow {
+  0%   { transform: scale(1);    }
+  35%  { transform: scale(1.08); }
+  65%  { transform: scale(0.97); }
+  85%  { transform: scale(1.02); }
+  100% { transform: scale(1);    }
+}
+
+.bounce-pillow-active {
+  animation: bounce-pillow 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+
+/* ── Prose (terms / privacy) ──────────────────────────────── */
+.prose-caramel h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: var(--color-text);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+.prose-caramel p {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.prose-caramel ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.prose-caramel ul li {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  line-height: 1.65;
+  padding-left: 1.25rem;
+  position: relative;
+}
+.prose-caramel ul li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--color-brand);
+}
+.prose-caramel a {
+  color: var(--color-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+.prose-caramel a:hover {
+  color: var(--color-brand-light);
+}
