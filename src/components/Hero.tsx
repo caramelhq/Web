@@ -51,13 +51,13 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
 
             {/* Heading */}
             <h1 className="font-display font-800 leading-[0.95] tracking-tight mb-6 animate-fade-up opacity-0 delay-1">
-              <span data-i18n="hero.line1" className="block text-7xl md:text-8xl lg:text-[6.5rem] text-text">Tu servidor.</span>
-              <span data-i18n="hero.line2" className="block text-7xl md:text-8xl lg:text-[6.5rem] text-gradient">Tus reglas.</span>
+              <span data-i18n="hero.line1" className="block text-7xl md:text-8xl lg:text-[6.5rem] text-text">Make it simple.</span>
+              <span data-i18n="hero.line2" className="block text-7xl md:text-8xl lg:text-[6.5rem] text-gradient">Make it perfect.</span>
             </h1>
 
             {/* Tagline */}
             <p data-i18n="hero.desc" className="text-muted text-lg md:text-xl font-body font-300 leading-relaxed max-w-md mb-10 animate-fade-up opacity-0 delay-2">
-              Caramel es el bot que se adapta a tu servidor. Moderación precisa, música sin interrupciones, economía propia y mucho más — todo en un solo lugar.
+              El bot de Discord que se adapta a tu servidor — no al revés.
             </p>
 
             {/* CTAs */}
