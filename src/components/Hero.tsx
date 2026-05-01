@@ -111,6 +111,10 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
                 priority
                 className="relative w-72 h-72 md:w-96 md:h-96 rounded-3xl object-cover ring-1 ring-brand/20"
               />
+              <div
+                className="absolute inset-0 rounded-3xl pointer-events-none"
+                style={{ background: 'radial-gradient(circle at 75% 15%, rgba(255,255,255,0.18) 0%, transparent 55%)' }}
+              />
             </div>
           </div>
 
