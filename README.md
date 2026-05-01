@@ -1,43 +1,34 @@
-# Astro Starter Kit: Minimal
+# Caramel — Web
 
-```sh
-pnpm create astro@latest -- --template minimal
+Marketing website for [Caramel](https://discord.com/application-directory/1450990518468350084), a Discord bot.
+
+Built with Next.js App Router, Tailwind CSS 4, and TypeScript.
+
+## Stack
+
+- **Framework** — Next.js 16 (App Router)
+- **UI** — React 19
+- **Styles** — Tailwind CSS 4 + CSS custom properties
+- **Language** — TypeScript 5
+- **Package manager** — pnpm
+
+## Development
+
+```bash
+pnpm install
+pnpm dev       # localhost:3000
+pnpm build
+pnpm lint
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Environment variables
 
-## 🚀 Project Structure
+Create a `.env.local` file:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```env
+BOT_API_HOST=your_bot_host
+BOT_API_PORT=4000
+STATS_API_TOKEN=your_token
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+These are used to fetch live bot stats (servers, users, commands) in the Hero section.
