@@ -82,17 +82,17 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
 
             {/* Stats */}
             <div className="flex gap-10 animate-fade-up opacity-0 delay-4">
-              <div>
+              <div className="text-center">
                 <p className="font-display font-700 text-3xl text-text">{fmt(stats?.servers)}</p>
                 <p data-i18n="stats.servers" className="text-muted text-xs font-body uppercase tracking-widest mt-0.5">Servidores</p>
               </div>
               <div className="w-px bg-border" />
-              <div>
+              <div className="text-center">
                 <p className="font-display font-700 text-3xl text-text">{fmt(stats?.users)}</p>
                 <p data-i18n="stats.users" className="text-muted text-xs font-body uppercase tracking-widest mt-0.5">Usuarios</p>
               </div>
               <div className="w-px bg-border" />
-              <div>
+              <div className="text-center">
                 <p className="font-display font-700 text-3xl text-text">{fmt(stats?.commands)}</p>
                 <p data-i18n="stats.commands" className="text-muted text-xs font-body uppercase tracking-widest mt-0.5">Comandos</p>
               </div>
