@@ -31,7 +31,7 @@ export default function Footer() {
           <div>
             <h4 data-i18n="footer.col.bot" className="font-display font-600 text-sm text-text/60 uppercase tracking-widest mb-5">Bot</h4>
             <ul className="space-y-3">
-              <li><a href="/invite" data-i18n="footer.add" className="text-muted hover:text-text text-sm font-body transition-colors duration-200">Añadir a Discord</a></li>
+              <li><span data-i18n="footer.add" className="text-muted/40 text-sm font-body cursor-not-allowed select-none">Añadir a Discord</span></li>
               <li><a href="/commands" data-i18n="footer.commands" className="text-muted hover:text-text text-sm font-body transition-colors duration-200">Comandos</a></li>
               <li><a href="/modules" data-i18n="footer.modules" className="text-muted hover:text-text text-sm font-body transition-colors duration-200">Módulos</a></li>
               <li><a href="/news" data-i18n="footer.changelog" className="text-muted hover:text-text text-sm font-body transition-colors duration-200">Novedades</a></li>
