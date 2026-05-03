@@ -57,21 +57,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  // Check for duplicate — contacts.get returns data:null if not found
-  const { data: existing } = await resend.contacts.get({ email });
-  if (existing) {
-    return NextResponse.json({ ok: true });
-  }
-
-  // New subscriber — save contact
+  // Save contact — if already exists Resend returns a validation error, which we ignore
   const { error: createError } = await resend.contacts.create({
     email,
     unsubscribed: false,
   });
 
   if (createError) {
-    console.error('[notify] contacts.create error:', createError);
-    return NextResponse.json({ error: 'Failed to register' }, { status: 500 });
+    // 422 = contact already exists — still send the confirmation email
+    if ((createError as { statusCode?: number }).statusCode !== 422) {
+      console.error('[notify] contacts.create error:', createError);
+      return NextResponse.json({ error: 'Failed to register' }, { status: 500 });
+    }
   }
 
   // Send confirmation email (best-effort)
