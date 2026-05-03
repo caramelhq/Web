@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DiscordIcon from './icons/DiscordIcon';
 import { IconBellFilled, IconX, IconCheck, IconBell } from '@tabler/icons-react';
+import { translations, type Lang } from '../lib/translations';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -10,6 +11,20 @@ export default function NotifyButton() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
+  const [lang, setLang] = useState<Lang>('es');
+
+  useEffect(() => {
+    const el = document.documentElement;
+    setLang((el.dataset.lang as Lang) || 'es');
+    const observer = new MutationObserver(() => {
+      setLang((el.dataset.lang as Lang) || 'es');
+    });
+    observer.observe(el, { attributes: true, attributeFilter: ['data-lang'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const T = translations[lang] ?? translations.es;
+  const tx = (key: string) => T[key] ?? key;
 
   function handleOpen() {
     setOpen(true);
@@ -47,7 +62,7 @@ export default function NotifyButton() {
           className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-surface border border-border text-muted/50 font-semibold font-body rounded-lg cursor-not-allowed select-none"
         >
           <DiscordIcon width="18" height="18" />
-          <span data-i18n="hero.cta.add">Añadir a Discord</span>
+          <span>{tx('hero.cta.add')}</span>
         </button>
 
         {/* Notify bell */}
@@ -63,7 +78,7 @@ export default function NotifyButton() {
           href="#features"
           className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-border hover:border-brand/50 text-muted hover:text-text font-medium font-body rounded-lg transition-all duration-200 hover:-translate-y-0.5"
         >
-          <span data-i18n="hero.cta.features">Ver funciones</span>
+          <span>{tx('hero.cta.features')}</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-bounce-x">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -94,11 +109,11 @@ export default function NotifyButton() {
                 <div className="w-14 h-14 rounded-full bg-brand/15 flex items-center justify-center mx-auto mb-5">
                   <IconCheck size={26} className="text-brand" />
                 </div>
-                <h3 data-i18n="hero.notify.success.title" className="font-display font-700 text-xl text-text mb-2">
-                  ¡Todo listo!
+                <h3 className="font-display font-700 text-xl text-text mb-2">
+                  {tx('hero.notify.success.title')}
                 </h3>
-                <p data-i18n="hero.notify.success.desc" className="text-muted font-body text-sm leading-relaxed">
-                  Te avisaremos en cuanto Caramel esté disponible.
+                <p className="text-muted font-body text-sm leading-relaxed">
+                  {tx('hero.notify.success.desc')}
                 </p>
               </div>
             ) : (
@@ -108,11 +123,11 @@ export default function NotifyButton() {
                     <IconBell size={20} className="text-brand" stroke={1.5} />
                   </div>
                   <div>
-                    <h3 data-i18n="hero.notify.title" className="font-display font-700 text-lg text-text leading-tight">
-                      Sé el primero en saberlo
+                    <h3 className="font-display font-700 text-lg text-text leading-tight">
+                      {tx('hero.notify.title')}
                     </h3>
-                    <p data-i18n="hero.notify.subtitle" className="text-muted font-body text-xs mt-0.5 leading-relaxed">
-                      Caramel está en desarrollo — te avisamos cuando esté listo
+                    <p className="text-muted font-body text-xs mt-0.5 leading-relaxed">
+                      {tx('hero.notify.subtitle')}
                     </p>
                   </div>
                 </div>
@@ -123,13 +138,13 @@ export default function NotifyButton() {
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="tu@correo.com"
+                    placeholder={tx('hero.notify.placeholder')}
                     className="w-full px-4 py-3 rounded-lg bg-bg border border-border focus:border-brand/60 focus:outline-none text-text font-body text-sm placeholder:text-muted/40 transition-colors"
                   />
 
                   {status === 'error' && (
-                    <p data-i18n="hero.notify.error" className="text-red-400 font-body text-xs">
-                      Algo salió mal. Inténtalo de nuevo.
+                    <p className="text-red-400 font-body text-xs">
+                      {tx('hero.notify.error')}
                     </p>
                   )}
 
@@ -144,10 +159,10 @@ export default function NotifyButton() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                         </svg>
-                        Enviando...
+                        {tx('hero.notify.loading')}
                       </span>
                     ) : (
-                      <span data-i18n="hero.notify.submit">Notificarme</span>
+                      <span>{tx('hero.notify.submit')}</span>
                     )}
                   </button>
                 </form>
