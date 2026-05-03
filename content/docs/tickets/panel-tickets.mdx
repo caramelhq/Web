@@ -1,0 +1,30 @@
+---
+title: Crear panel de tickets
+description: Configura el mensaje con el botón de apertura de tickets.
+---
+
+# Crear panel de tickets
+
+## Crear el panel
+
+```
+/tickets panel crear #canal
+```
+
+Caramel enviará un mensaje con un botón "Abrir ticket" al canal especificado. Los usuarios hacen clic en ese botón para abrir un ticket privado.
+
+## Personalizar el panel
+
+```
+/tickets panel titulo [texto]
+/tickets panel descripcion [texto]
+/tickets panel color [hex]
+```
+
+## Mover el panel
+
+Si necesitas mover el panel a otro canal, elimina el mensaje y crea uno nuevo:
+
+```
+/tickets panel crear #nuevo-canal
+```

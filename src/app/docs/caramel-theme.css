@@ -1,0 +1,63 @@
+/* ── Caramel Pantone theme for fumadocs ────────────────────────
+   Palette:
+   BASE 7526 C  #d17154  acento principal
+   7527 C       #dc8e73  tono medio
+   7525 C       #b55a3e  CTA / hover
+   489 C        #e8b09a  suave
+   9183 C       #f5e1d9  muy suave
+   4975 C       #5c2314  oscuro
+   ─────────────────────────────────────────────────────────── */
+
+/* Light mode */
+:root {
+  --color-fd-background:         #fdf8f4;
+  --color-fd-foreground:         #1c1410;
+  --color-fd-muted:              #f4ede7;
+  --color-fd-muted-foreground:   #8a7060;
+  --color-fd-popover:            #fdf8f4;
+  --color-fd-popover-foreground: #1c1410;
+  --color-fd-card:               #ece2da;
+  --color-fd-card-foreground:    #1c1410;
+  --color-fd-border:             rgba(221, 208, 198, 0.7);
+  --color-fd-primary:            #d17154;
+  --color-fd-primary-foreground: #fdf8f4;
+  --color-fd-secondary:          #ece2da;
+  --color-fd-secondary-foreground: #1c1410;
+  --color-fd-accent:             rgba(209, 113, 84, 0.12);
+  --color-fd-accent-foreground:  #5c2314;
+  --color-fd-ring:               #d17154;
+  --color-fd-overlay:            rgba(28, 20, 16, 0.25);
+}
+
+/* Dark mode */
+.dark {
+  --color-fd-background:         #0c0a09;
+  --color-fd-foreground:         #f0ebe5;
+  --color-fd-muted:              #141110;
+  --color-fd-muted-foreground:   rgba(122, 106, 96, 0.9);
+  --color-fd-popover:            #1e1814;
+  --color-fd-popover-foreground: #f0ebe5;
+  --color-fd-card:               #141110;
+  --color-fd-card-foreground:    #f0ebe5;
+  --color-fd-border:             rgba(46, 34, 25, 0.9);
+  --color-fd-primary:            #d17154;
+  --color-fd-primary-foreground: #0c0a09;
+  --color-fd-secondary:          #1e1814;
+  --color-fd-secondary-foreground: #f0ebe5;
+  --color-fd-accent:             rgba(209, 113, 84, 0.18);
+  --color-fd-accent-foreground:  #e8b09a;
+  --color-fd-ring:               #d17154;
+  --color-fd-overlay:            rgba(0, 0, 0, 0.55);
+}
+
+/* Dark sidebar específico */
+.dark #nd-sidebar {
+  --color-fd-muted:              #1e1814;
+  --color-fd-secondary:          #241a15;
+  --color-fd-muted-foreground:   #7a6a60;
+}
+
+/* Fuente consistente con el sitio */
+:root {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}

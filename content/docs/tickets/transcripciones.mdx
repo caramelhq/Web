@@ -1,0 +1,30 @@
+---
+title: Transcripciones
+description: Genera y almacena el historial de conversaciones de los tickets.
+---
+
+# Transcripciones
+
+Al cerrar un ticket, Caramel genera automáticamente una transcripción con todo el historial de mensajes.
+
+## Configurar canal de transcripciones
+
+```
+/tickets transcripciones #canal
+```
+
+Las transcripciones se enviarán a ese canal cada vez que se cierre un ticket.
+
+## Formato
+
+Las transcripciones se generan en formato HTML con estilos visuales similares a Discord. Incluyen:
+- Nombre y avatar de cada participante.
+- Timestamp de cada mensaje.
+- Archivos adjuntos e imágenes.
+- Embeds y reacciones.
+
+## Desactivar transcripciones
+
+```
+/tickets transcripciones desactivar
+```

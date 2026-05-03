@@ -1,0 +1,4 @@
+{
+  "title": "Tickets",
+  "pages": ["index", "panel-tickets", "categorias", "gestion", "transcripciones"]
+}

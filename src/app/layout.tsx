@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import BfcacheGuard from '@/components/BfcacheGuard';
 import './globals.css';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 
 export const metadata: Metadata = {
   title: { default: 'Caramel', template: '%s — Caramel' },
@@ -17,7 +16,36 @@ export const metadata: Metadata = {
   },
 };
 
-const ANTI_FLASH = `(function(){var t=localStorage.getItem('caramel-theme')||'dark';var l=localStorage.getItem('caramel-lang')||'es';document.documentElement.dataset.theme=t;document.documentElement.dataset.lang=l;if(sessionStorage.getItem('ns:'+location.pathname)==='1')document.documentElement.dataset.navScrolled='1';window.addEventListener('pageshow',function(e){if(e.persisted)window.location.reload();});})();`;
+const ANTI_FLASH = `(function(){
+var t=localStorage.getItem('caramel-theme')||'dark';
+var l=localStorage.getItem('caramel-lang')||'es';
+document.documentElement.dataset.theme=t;
+document.documentElement.dataset.lang=l;
+if(t==='dark')document.documentElement.classList.add('dark');
+if(sessionStorage.getItem('ns:'+location.pathname)==='1')document.documentElement.dataset.navScrolled='1';
+window.caramelSetTheme=function(theme){
+  document.body.classList.add('theme-transitioning');
+  document.documentElement.dataset.theme=theme;
+  document.documentElement.classList.toggle('dark',theme==='dark');
+  localStorage.setItem('caramel-theme',theme);
+  setTimeout(function(){document.body.classList.remove('theme-transitioning');},250);
+};
+window.caramelSetLang=function(lang){
+  document.documentElement.dataset.lang=lang;
+  localStorage.setItem('caramel-lang',lang);
+  if(window.__T&&window.__T[lang]){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key=el.getAttribute('data-i18n');
+      if(window.__T[lang][key]!==undefined)el.textContent=window.__T[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(function(el){
+      var key=el.getAttribute('data-i18n-title');
+      if(window.__T[lang][key]!==undefined)el.setAttribute('title',window.__T[lang][key]);
+    });
+  }
+};
+window.addEventListener('pageshow',function(e){if(e.persisted)window.location.reload();});
+})();`;
 
 const I18N_THEME_SCRIPT = `
 window.__T = {
@@ -27,12 +55,21 @@ window.__T = {
     'nav.support': 'Soporte',
     'nav.premium': 'Premium',
     'nav.login': 'Ingresar',
-    'hero.badge': 'Discord Bot · Disponible ahora',
+    'hero.badge': 'Discord Bot · En desarrollo',
+    'hero.badge.status': 'En desarrollo',
     'hero.line1': 'Make it simple.',
     'hero.line2': 'Make it perfect.',
     'hero.desc': 'El bot de Discord que se adapta a tu servidor, no al revés.',
     'hero.cta.add': 'Añadir a Discord',
+    'hero.cta.notify': 'Notificarme',
+    'hero.cta.notify.title': 'Notificarme cuando esté disponible',
     'hero.cta.features': 'Ver funciones',
+    'hero.notify.title': 'Sé el primero en saberlo',
+    'hero.notify.subtitle': 'Caramel está en desarrollo — te avisamos cuando esté listo',
+    'hero.notify.submit': 'Notificarme',
+    'hero.notify.success.title': '¡Todo listo!',
+    'hero.notify.success.desc': 'Te avisaremos en cuanto Caramel esté disponible.',
+    'hero.notify.error': 'Algo salió mal. Inténtalo de nuevo.',
     'stats.servers': 'Servidores',
     'stats.users': 'Usuarios',
     'stats.commands': 'Comandos',
@@ -83,12 +120,21 @@ window.__T = {
     'nav.support': 'Support',
     'nav.premium': 'Premium',
     'nav.login': 'Login',
-    'hero.badge': 'Discord Bot · Available now',
+    'hero.badge': 'Discord Bot · In development',
+    'hero.badge.status': 'In development',
     'hero.line1': 'Make it simple.',
     'hero.line2': 'Make it perfect.',
     'hero.desc': 'The Discord bot that adapts to your server, not the other way around.',
     'hero.cta.add': 'Add to Discord',
+    'hero.cta.notify': 'Notify me',
+    'hero.cta.notify.title': 'Notify me when available',
     'hero.cta.features': 'Preview features',
+    'hero.notify.title': 'Be the first to know',
+    'hero.notify.subtitle': "Caramel is in development — we'll let you know when it's ready",
+    'hero.notify.submit': 'Notify me',
+    'hero.notify.success.title': "You're in!",
+    'hero.notify.success.desc': "We'll let you know as soon as Caramel is available.",
+    'hero.notify.error': 'Something went wrong. Please try again.',
     'stats.servers': 'Servers',
     'stats.users': 'Users',
     'stats.commands': 'Commands',
@@ -142,20 +188,11 @@ function applyTranslations(lang) {
     var key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.textContent = t[key];
   });
+  document.querySelectorAll('[data-i18n-title]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-title');
+    if (t[key] !== undefined) el.setAttribute('title', t[key]);
+  });
 }
-
-window.caramelSetTheme = function(theme) {
-  document.body.classList.add('theme-transitioning');
-  document.documentElement.dataset.theme = theme;
-  localStorage.setItem('caramel-theme', theme);
-  setTimeout(function() { document.body.classList.remove('theme-transitioning'); }, 250);
-};
-
-window.caramelSetLang = function(lang) {
-  document.documentElement.dataset.lang = lang;
-  localStorage.setItem('caramel-lang', lang);
-  applyTranslations(lang);
-};
 
 // afterInteractive runs after DOMContentLoaded, so call directly
 applyTranslations(localStorage.getItem('caramel-lang') || 'es');
@@ -174,9 +211,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="noise" suppressHydrationWarning>
-        <Navbar />
+        <BfcacheGuard />
         {children}
-        <Footer />
         <Script id="i18n-theme" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: I18N_THEME_SCRIPT }} />
       </body>
     </html>

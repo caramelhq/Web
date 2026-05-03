@@ -174,6 +174,7 @@ export default function Navbar() {
                   alt="Caramel Premium"
                   width={36}
                   height={36}
+                  priority={isPremium}
                   className={`absolute inset-0 w-9 h-9 rounded-full transition-opacity duration-500 ${isPremium ? 'opacity-100' : 'opacity-0'}`}
                 />
               </div>

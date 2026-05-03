@@ -1,0 +1,26 @@
+---
+title: Gestión de tickets
+description: Cómo gestionar tickets abiertos desde el panel de staff.
+---
+
+# Gestión de tickets
+
+## Comandos de staff
+
+| Comando | Descripción |
+| --- | --- |
+| `/ticket cerrar` | Cierra el ticket actual |
+| `/ticket cerrar [razón]` | Cierra con razón registrada |
+| `/ticket añadir @usuario` | Añade a un usuario al ticket |
+| `/ticket eliminar @usuario` | Elimina a un usuario del ticket |
+| `/ticket reclamar` | Asigna el ticket a quien lo ejecuta |
+| `/ticket transferir @staff` | Transfiere el ticket a otro miembro de staff |
+
+## Flujo recomendado
+
+1. Usuario abre ticket desde el panel.
+2. Staff recibe notificación en el canal de logs.
+3. Staff ejecuta `/ticket reclamar` para asignárselo.
+4. Se resuelve el problema en el canal privado.
+5. Staff cierra el ticket con `/ticket cerrar`.
+6. Caramel genera la transcripción automáticamente.

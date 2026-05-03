@@ -1,0 +1,31 @@
+---
+title: Canal de subida de nivel
+description: Configura dónde Caramel anuncia las subidas de nivel.
+---
+
+# Canal de subida de nivel
+
+## Configurar canal
+
+```
+/niveles canal #canal
+```
+
+Cuando un usuario sube de nivel, Caramel enviará un mensaje a ese canal.
+
+## Desactivar notificaciones
+
+```
+/niveles canal desactivar
+```
+
+## Mensaje personalizado
+
+```
+/niveles mensaje [texto]
+```
+
+Variables disponibles en el mensaje:
+- `{usuario}` — Mención del usuario
+- `{nivel}` — Nivel alcanzado
+- `{servidor}` — Nombre del servidor

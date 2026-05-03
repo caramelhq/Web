@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import DiscordIcon from './icons/DiscordIcon';
 import Container from './Container';
+import NotifyButton from './NotifyButton';
 import caramelIcon from '../assets/Caramel-Icon.png';
-import { INVITE_URL } from '../config';
-import type { BotStats } from '../app/page';
+import type { BotStats } from '../app/(main)/page';
 
 function fmt(n: number | null | undefined): string {
   if (n == null) return '—';
@@ -44,9 +43,9 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
           <div className="order-2 lg:order-1">
 
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-lg border border-brand/30 bg-brand/10 text-brand text-xs font-semibold font-body tracking-widest uppercase animate-fade-up opacity-0">
+            <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-lg border border-brand/20 bg-brand/8 text-brand text-xs font-semibold font-body tracking-widest uppercase animate-fade-up opacity-0">
               <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-              <span data-i18n="hero.badge">Discord Bot · Disponible ahora</span>
+              <span data-i18n="hero.badge">Discord Bot · En desarrollo</span>
             </div>
 
             {/* Heading */}
@@ -61,24 +60,7 @@ export default function Hero({ stats }: { stats: BotStats | null }) {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mb-16 animate-fade-up opacity-0 delay-3">
-              <a
-                href={INVITE_URL}
-                className="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-brand hover:bg-brand-light text-bg font-semibold font-body rounded-lg transition-all duration-200 hover:shadow-xl hover:shadow-brand/30 hover:-translate-y-0.5"
-              >
-                <DiscordIcon width="18" height="18" />
-                <span data-i18n="hero.cta.add">Añadir a Discord</span>
-              </a>
-              <a
-                href="#features"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-border hover:border-brand/50 text-muted hover:text-text font-medium font-body rounded-lg transition-all duration-200 hover:-translate-y-0.5"
-              >
-                <span data-i18n="hero.cta.features">Ver funciones</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
+            <NotifyButton />
 
             {/* Stats */}
             <div className="flex gap-10 animate-fade-up opacity-0 delay-4">

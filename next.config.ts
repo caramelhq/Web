@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
+import { createMDX } from 'fumadocs-mdx/next';
 
-const nextConfig: NextConfig = {};
-
-export default nextConfig;
+const config: NextConfig = {};
+const withMDX = createMDX();
+export default withMDX(config);

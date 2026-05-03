@@ -1,0 +1,35 @@
+---
+title: Configurar XP
+description: Ajusta cómo y cuánto XP ganan los usuarios.
+---
+
+# Configurar XP
+
+## XP por mensaje
+
+Define el rango de XP que recibe un usuario por mensaje (con cooldown de 60s para evitar spam):
+
+```
+/niveles xp min [cantidad]
+/niveles xp max [cantidad]
+```
+
+## Canales ignorados
+
+Los mensajes en estos canales no otorgan XP:
+
+```
+/niveles ignorar canal #canal
+/niveles ignorar rol @rol
+```
+
+## Resetear XP
+
+```
+/niveles reset @usuario
+/niveles reset servidor
+```
+
+<Callout type="warning">
+  `/niveles reset servidor` elimina el XP de **todos** los miembros. Esta acción no se puede deshacer.
+</Callout>
