@@ -1,18 +1,16 @@
 import type { Metadata } from 'next';
 import Container from '@/components/Container';
+import UptimeChart from '@/components/UptimeChart';
+import { getBotHealth, getBotHistory } from '@/lib/bot-stats';
 
 export const metadata: Metadata = { title: 'Estado' };
 
-type ServiceStatus = 'operational' | 'degraded' | 'outage';
-
-const services: { name: string; status: ServiceStatus; latency: string }[] = [
-  { name: 'Bot principal', status: 'operational', latency: '48ms' },
-  { name: 'API de comandos', status: 'operational', latency: '62ms' },
-  { name: 'Módulo de música', status: 'operational', latency: '91ms' },
-  { name: 'Base de datos', status: 'operational', latency: '11ms' },
-  { name: 'Panel de control', status: 'operational', latency: '74ms' },
-  { name: 'Webhooks', status: 'operational', latency: '38ms' },
-];
+function fmt(n: number | null | undefined): string {
+  if (n == null) return '—';
+  if (n >= 1_000_000) return `${+(n / 1_000_000).toFixed(1)}M+`;
+  if (n >= 1_000)     return `${+(n / 1_000).toFixed(1)}k+`;
+  return `${n}+`;
+}
 
 const incidents = [
   {
@@ -29,25 +27,20 @@ const incidents = [
   },
 ];
 
-const statusLabel: Record<ServiceStatus, string> = {
-  operational: 'Operativo',
-  degraded: 'Degradado',
-  outage: 'Caído',
-};
+export default async function StatusPage() {
+  const [health, history] = await Promise.all([
+    getBotHealth(60),
+    getBotHistory(60),
+  ]);
 
-const statusDot: Record<ServiceStatus, string> = {
-  operational: 'bg-green-500',
-  degraded: 'bg-yellow-400',
-  outage: 'bg-red-500',
-};
+  const { online, latency, stats } = health;
 
-const statusText: Record<ServiceStatus, string> = {
-  operational: 'text-green-400',
-  degraded: 'text-yellow-400',
-  outage: 'text-red-400',
-};
+  const badgeClass = online
+    ? 'border-green-500/30 bg-green-500/10 text-green-400'
+    : 'border-red-500/30 bg-red-500/10 text-red-400';
+  const dotClass   = online ? 'bg-green-500' : 'bg-red-500';
+  const badgeLabel = online ? 'Todos los sistemas operativos' : 'Bot sin conexión';
 
-export default function StatusPage() {
   return (
     <main>
       {/* Hero */}
@@ -57,40 +50,67 @@ export default function StatusPage() {
           style={{ background: 'radial-gradient(ellipse, rgba(215,118,85,0.07) 0%, transparent 65%)' }}
         />
         <Container className="relative text-center">
-          <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-xs font-bold font-body">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            Todos los sistemas operativos
+          <div className={`inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full border text-xs font-bold font-body ${badgeClass}`}>
+            <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${dotClass}`} />
+            {badgeLabel}
           </div>
           <h1 className="font-display font-800 text-4xl md:text-5xl text-text leading-tight tracking-tight mt-4 mb-3">
             Estado del sistema
           </h1>
-          <p className="text-muted text-base font-body">Última actualización: hace 2 minutos</p>
+          <p className="text-muted text-base font-body">Actualiza cada 60 segundos</p>
         </Container>
       </section>
 
-      {/* Services */}
-      <section className="pb-16">
+      {/* Service */}
+      <section className="pb-10">
         <Container>
           <div className="max-w-2xl mx-auto bg-surface border border-border rounded-2xl overflow-hidden">
             <div className="px-6 py-4 border-b border-border">
               <p className="text-xs font-bold font-body text-muted tracking-widest uppercase">Servicios</p>
             </div>
             <ul className="divide-y divide-border/50">
-              {services.map(s => (
-                <li key={s.name} className="flex items-center justify-between px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <span className={`w-2 h-2 rounded-full ${statusDot[s.status]}`} />
-                    <span className="text-sm font-bold font-body text-text">{s.name}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-xs font-body text-muted">{s.latency}</span>
-                    <span className={`text-xs font-bold font-body ${statusText[s.status]}`}>
-                      {statusLabel[s.status]}
-                    </span>
-                  </div>
-                </li>
-              ))}
+              <li className="flex items-center justify-between px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <span className={`w-2 h-2 rounded-full ${online ? 'bg-green-500' : 'bg-red-500'}`} />
+                  <span className="text-sm font-bold font-body text-text">Bot de Caramel</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-xs font-body text-muted">
+                    {latency != null ? `${latency}ms` : '—'}
+                  </span>
+                  <span className={`text-xs font-bold font-body ${online ? 'text-green-400' : 'text-red-400'}`}>
+                    {online ? 'Operativo' : 'Caído'}
+                  </span>
+                </div>
+              </li>
             </ul>
+          </div>
+        </Container>
+      </section>
+
+      {/* Uptime chart */}
+      <section className="pb-10">
+        <Container>
+          <div className="max-w-2xl mx-auto">
+            <UptimeChart history={history} />
+          </div>
+        </Container>
+      </section>
+
+      {/* Stats */}
+      <section className="pb-16">
+        <Container>
+          <div className="max-w-2xl mx-auto grid grid-cols-3 gap-4">
+            {[
+              { label: 'Servidores', value: fmt(stats?.servers)  },
+              { label: 'Usuarios',   value: fmt(stats?.users)    },
+              { label: 'Comandos',   value: fmt(stats?.commands) },
+            ].map(({ label, value }) => (
+              <div key={label} className="bg-surface border border-border rounded-2xl p-6 text-center">
+                <p className="font-display font-700 text-3xl text-text">{value}</p>
+                <p className="text-muted text-xs font-body uppercase tracking-widest mt-1">{label}</p>
+              </div>
+            ))}
           </div>
         </Container>
       </section>
@@ -110,7 +130,9 @@ export default function StatusPage() {
                   <p className="text-xs font-body text-muted leading-relaxed mb-3">{inc.body}</p>
                   {inc.resolved && (
                     <span className="inline-flex items-center gap-1.5 text-xs font-bold font-body text-green-400">
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
                       Resuelto
                     </span>
                   )}

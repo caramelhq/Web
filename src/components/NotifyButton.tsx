@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DiscordIcon from './icons/DiscordIcon';
 import { IconBellFilled, IconX, IconCheck, IconBell } from '@tabler/icons-react';
 import { translations, type Lang } from '../lib/translations';
@@ -12,6 +12,17 @@ export default function NotifyButton() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [lang, setLang] = useState<Lang>('es');
+  const [hovered, setHovered] = useState(false);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  function onEnter() {
+    clearTimeout(hideTimer.current);
+    setHovered(true);
+  }
+
+  function onLeave() {
+    hideTimer.current = setTimeout(() => setHovered(false), 150);
+  }
 
   useEffect(() => {
     const el = document.documentElement;
@@ -56,23 +67,28 @@ export default function NotifyButton() {
   return (
     <>
       <div className="flex flex-wrap gap-4 mb-16 animate-fade-up opacity-0 delay-3">
-        {/* Disabled — bot not live yet */}
-        <button
-          disabled
-          className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-surface border border-border text-muted/50 font-semibold font-body rounded-lg cursor-not-allowed select-none"
-        >
-          <DiscordIcon width="18" height="18" />
-          <span>{tx('hero.cta.add')}</span>
-        </button>
+        {/* Disabled Discord button + hover notify button */}
+        <div className="relative" onMouseEnter={onEnter} onMouseLeave={onLeave}>
+          <button
+            disabled
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-surface border border-border text-muted/50 font-semibold font-body rounded-lg cursor-not-allowed select-none"
+          >
+            <DiscordIcon width="18" height="18" />
+            <span>{tx('hero.cta.add')}</span>
+          </button>
 
-        {/* Notify bell */}
-        <button
-          onClick={handleOpen}
-          data-i18n-title="hero.cta.notify.title"
-          className="inline-flex items-center justify-center px-4 py-3.5 border border-brand/40 hover:border-brand bg-brand/10 hover:bg-brand text-brand hover:text-[#fdf7f3] rounded-lg transition-all duration-200 hover:-translate-y-0.5"
-        >
-          <IconBellFilled size={18} />
-        </button>
+          <div className={`absolute top-full left-0 w-full pt-2 flex justify-center transition-all duration-300 ease-out ${hovered ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-1 pointer-events-none'}`}>
+            <button
+              onClick={handleOpen}
+              onMouseEnter={onEnter}
+              onMouseLeave={onLeave}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2 border border-brand/40 hover:border-brand bg-brand/10 hover:bg-brand text-brand hover:text-[#fdf7f3] font-semibold font-body text-sm rounded-lg transition-all duration-200"
+            >
+              <IconBellFilled size={14} />
+              <span>{tx('hero.cta.notify')}</span>
+            </button>
+          </div>
+        </div>
 
         <a
           href="#features"
