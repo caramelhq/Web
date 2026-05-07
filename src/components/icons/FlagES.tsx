@@ -1,0 +1,12 @@
+interface FlagESProps {
+  className?: string;
+}
+
+export default function FlagES({ className = '' }: FlagESProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20" className={className} aria-label="Bandera de España">
+      <rect width="30" height="20" fill="#c60b1e" />
+      <rect y="5" width="30" height="10" fill="#ffc400" />
+    </svg>
+  );
+}

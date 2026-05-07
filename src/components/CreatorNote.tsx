@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Container from './Container';
-import joshiny from '../assets/joshiny.png';
+import joshiny from '../assets/joshiny.svg';
 
 export default function CreatorNote() {
   return (
@@ -16,34 +17,40 @@ export default function CreatorNote() {
               data-i18n="creator.tag"
               className="text-xs font-semibold font-body tracking-widest uppercase text-muted"
             >
-              From the creator
+              Del creador
             </span>
           </div>
 
           <div className="flex items-start gap-6">
 
-            {/* Avatar + identity */}
-            <div className="shrink-0 flex flex-col items-center gap-2 mt-1">
+            {/* Avatar */}
+            <Link href="/suggest" className="shrink-0 flex flex-col items-center gap-2 group">
               <Image
                 src={joshiny}
                 alt="joshiny"
-                width={64}
-                height={64}
-                className="rounded-full w-16 h-16 shadow-[0_0_8px_4px_rgba(255,255,255,0.45)]"
+                width={96}
+                height={96}
+                unoptimized
+                className="rounded-full w-24 h-24 shadow-[0_0_8px_4px_rgba(255,255,255,0.45)] transition-all duration-300 group-hover:shadow-[0_0_10px_5px_rgba(255,255,255,0.75)] group-hover:scale-105"
               />
               <div className="text-center">
-                <p className="text-text text-sm font-semibold font-body leading-tight">joshiny</p>
-                <p data-i18n="creator.role" className="text-muted text-xs font-body">Creator</p>
+                <p className="text-text font-semibold font-body leading-tight">joshiny</p>
+                <p data-i18n="creator.role" className="text-muted text-sm font-body">Creador</p>
               </div>
-            </div>
+            </Link>
 
-            {/* Quote */}
-            <p
-              data-i18n="creator.quote"
-              className="text-text text-base leading-relaxed font-body mt-1"
-            >
-              Caramel was born from my obsession with simplicity and performance. My goal is to create the most robust and modular Discord bot in the ecosystem, allowing any community to grow with professional-grade tools without the usual technical complexity.
-            </p>
+            {/* Text */}
+            <div className="flex flex-col gap-5">
+              <p data-i18n="creator.quote.1" className="text-text text-base leading-relaxed font-body">
+                Hice Caramel porque siempre terminaba encontrándome con algo que no funcionaba como debería. Y cuando por fin encontraba algo bueno, tarde o temprano llegaba ese momento donde quería más control.. y simplemente no podía tenerlo.
+              </p>
+              <p data-i18n="creator.quote.2" className="text-text text-base leading-relaxed font-body">
+                Así nació la idea: crear el bot que haga cada cosa exactamente como debería sentirse. Sin barreras, sin límites raros, sin tener que conformarse con menos.
+              </p>
+              <span data-i18n="creator.contact" className="text-muted text-sm font-body italic">
+                Si tienes alguna idea, no dudes en contactarme
+              </span>
+            </div>
 
           </div>
         </div>

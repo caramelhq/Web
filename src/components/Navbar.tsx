@@ -9,7 +9,7 @@ import { DASHBOARD_AUTH_URL } from '../config';
 import caramelIcon from '../assets/Caramel-Icon.png';
 import caramelPremiumIcon from '../assets/Caramel-Premium.png';
 import Container from './Container';
-import FlagMX from './icons/FlagMX';
+import FlagES from './icons/FlagES';
 import FlagUS from './icons/FlagUS';
 
 const links: { label: string; href: string; i18n: string; premium?: boolean }[] = [
@@ -237,7 +237,7 @@ export default function Navbar() {
                 onClick={() => setLangOpen(o => !o)}
                 className="h-9 px-3 flex items-center gap-1.5 rounded-lg border border-border hover:border-brand/40 text-muted hover:text-brand text-xs font-bold font-body tracking-wider transition-all duration-200"
               >
-                <FlagMX className="flag-mx w-5 h-auto rounded-[2px]" />
+                <FlagES className="flag-mx w-5 h-auto rounded-[2px]" />
                 <FlagUS className="flag-us w-5 h-auto rounded-[2px]" />
                 <span>{lang.toUpperCase()}</span>
                 <svg className={`w-3 h-3 transition-transform duration-200${langOpen ? ' rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -246,20 +246,20 @@ export default function Navbar() {
               </button>
 
               {langOpen && (
-                <div className="absolute top-full left-0 mt-1.5 w-32 bg-surface border border-border rounded-lg shadow-xl overflow-hidden z-50">
+                <div className="absolute top-full left-0 mt-1.5 w-full bg-surface border border-border rounded-lg shadow-xl overflow-hidden z-50">
                   <button
                     onClick={() => { handleSetLang('es'); setLangOpen(false); }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold font-body text-muted hover:text-brand hover:bg-surface-2 transition-colors duration-150"
                   >
-                    <FlagMX className="w-5 h-auto rounded-[2px]" />
-                    Español
+                    <FlagES className="w-5 h-auto rounded-[2px]" />
+                    ES
                   </button>
                   <button
                     onClick={() => { handleSetLang('en'); setLangOpen(false); }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold font-body text-muted hover:text-brand hover:bg-surface-2 transition-colors duration-150"
                   >
                     <FlagUS className="w-5 h-auto rounded-[2px]" />
-                    English
+                    EN
                   </button>
                 </div>
               )}
@@ -333,7 +333,7 @@ export default function Navbar() {
                     onClick={() => setMobileLangOpen(o => !o)}
                     className="h-9 px-3 flex items-center gap-1.5 rounded-lg border border-border text-muted text-xs font-semibold font-body tracking-wider transition-all duration-200"
                   >
-                    <FlagMX className="flag-mx w-5 h-auto rounded-[2px]" />
+                    <FlagES className="flag-mx w-5 h-auto rounded-[2px]" />
                     <FlagUS className="flag-us w-5 h-auto rounded-[2px]" />
                     <span>{lang.toUpperCase()}</span>
                     <svg className={`w-3 h-3 transition-transform duration-200${mobileLangOpen ? ' rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -342,20 +342,20 @@ export default function Navbar() {
                   </button>
 
                   {mobileLangOpen && (
-                    <div className="absolute bottom-full left-0 mb-1.5 w-32 bg-surface border border-border rounded-lg shadow-xl overflow-hidden z-50">
+                    <div className="absolute bottom-full left-0 mb-1.5 w-full bg-surface border border-border rounded-lg shadow-xl overflow-hidden z-50">
                       <button
                         onClick={() => { handleSetLang('es'); setMobileLangOpen(false); }}
                         className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold font-body text-muted hover:text-brand hover:bg-surface-2 transition-colors duration-150"
                       >
-                        <FlagMX className="w-5 h-auto rounded-[2px]" />
-                        Español
+                        <FlagES className="w-5 h-auto rounded-[2px]" />
+                        ES
                       </button>
                       <button
                         onClick={() => { handleSetLang('en'); setMobileLangOpen(false); }}
                         className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold font-body text-muted hover:text-brand hover:bg-surface-2 transition-colors duration-150"
                       >
                         <FlagUS className="w-5 h-auto rounded-[2px]" />
-                        English
+                        EN
                       </button>
                     </div>
                   )}
